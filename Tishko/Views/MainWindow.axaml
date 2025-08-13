@@ -1,0 +1,89 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Tishko.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ctrl="clr-namespace:Tishko.Controls"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Tishko.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Tishko">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*,*" Background="Black">
+        <StackPanel Grid.Column="2" Spacing="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Button Classes="HeaderIcon"  Width="40" Height="40">
+            <Button.Content>
+                <Svg Path="/Assets/Icons/Chart.svg"></Svg>
+            </Button.Content>
+        </Button>
+            <Button Classes="HeaderIcon" Width="40" Height="40">
+                <Button.Content>
+                    <Svg Path="/Assets/Icons/Settings.svg"></Svg>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+  <StackPanel Orientation="Horizontal" Spacing="8">
+      <Button Content="Start" Background="White" Foreground="Black" Click="Button_OnClick" Width="80"/>
+      <Button Content="Stop"  Background="White" Foreground="Black"  Click="Button_OnClick1"  Width="80"/>
+    </StackPanel>
+
+    <!-- The orb itself -->
+    <Border Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+      <ctrl:SessionOrb x:Name="Orb"
+                           Width="500" Height="500"
+                           FillBrush="White"
+
+                           BreathPeriod="9"
+                           BreathMinScale="0.96"
+                           BreathMaxScale="1.0"
+
+                           WobbleAmplitude="0.8"
+                           WobbleFrequency="1.0"
+
+                           AxisAnisotropy="0.02"
+                           AnisotropyFrequency="0.15"
+
+                           RotationSpeed="0.3"
+
+                           TwinEnabled="True"
+                           TwinScaleMultiplier="0.985"
+                           TwinOffsetPixels="0.8"
+                           TwinPhaseOffset="3.14159"
+                           TwinOrbitFrequency="0.05"
+
+                           RingsEnabled="True"
+                           RingCount="5"
+                           RingSpacing="14"
+                           RingThickness="2"
+                           RingOpacity="0.35"
+                           RingOpacityFalloff="0.82"
+                           RingWobbleAmplitude="0.9"
+                           RingWobbleFrequency="0.55"
+
+                           AutoStart="True"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center">
+        <!-- Inner content -->
+        <StackPanel Spacing="6">
+          <TextBlock Text="Session" Foreground="Black"
+                     FontSize="32" FontWeight="SemiBold"
+                     HorizontalAlignment="Center"/>
+          <TextBlock Text="Ready" Foreground="Black"
+                     Opacity="0.85" FontSize="20"
+                     HorizontalAlignment="Center"/>
+        </StackPanel>
+      </ctrl:SessionOrb>
+    </Border> 
+        </StackPanel>   
+    </Grid>
+</Window>
