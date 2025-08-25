@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Tishko.ViewModels.Windows"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tishko"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Tishko.Views.Windows.MainWindowView"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Tishko">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,*,*">
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Classes="TishkoLogo">Tishko</TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="2" Spacing="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Command="{Binding NavigateStatistics}" Classes="HeaderIcon"  Width="40" Height="40">
+            <Button.Content>
+                <Svg Path="/Assets/Icons/Chart.svg"></Svg>
+            </Button.Content>
+        </Button>
+            <Button Command="{Binding NavigateSettings}" Classes="HeaderIcon" Width="40" Height="40">
+                <Button.Content>
+                    <Svg Path="/Assets/Icons/Settings.svg"></Svg>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <ContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,15,0,0" Content="{Binding CurrentViewModel}">
+            <ContentControl.DataTemplates>
+                <local:ViewLocator />
+            </ContentControl.DataTemplates>
+        </ContentControl>    
+    </Grid>
+</Window>

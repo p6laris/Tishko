@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Add Resources Here -->
+    <FontFamily x:Key="Exo">/Assets/Fonts/Exo2-Regular.ttf#Exo 2</FontFamily>
+    <FontFamily x:Key="ExoThin">/Assets/Fonts/Exo2-Thin.ttf#Exo 2 Thin</FontFamily>
+    <FontFamily x:Key="ExoExtraLight">/Assets/Fonts/Exo2-ExtraLight.ttf#Exo 2 ExtraLight</FontFamily>
+    <FontFamily x:Key="ExoLight">/Assets/Fonts/Exo2-Light.ttf#Exo 2 Light</FontFamily>
+    <FontFamily x:Key="ExoMedium">/Assets/Fonts/Exo2-Medium.ttf#Exo 2 Medium</FontFamily>
+    <FontFamily x:Key="ExoSemiBold">/Assets/Fonts/Exo2-SemiBold.ttf#Exo 2 SemiBold</FontFamily>
+    <FontFamily x:Key="ExoBold">/Assets/Fonts/Exo2-Bold.ttf#Exo 2</FontFamily>
+    <FontFamily x:Key="ExoExtraBold">/Assets/Fonts/Exo2-ExtraBold.ttf#Exo 2 ExtraBold</FontFamily>
+    <FontFamily x:Key="ExoBlack">/Assets/Fonts/Exo2-Black.ttf#Exo 2 Black</FontFamily>
+</ResourceDictionary>

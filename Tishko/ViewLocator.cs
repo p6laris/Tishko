@@ -1,30 +1,30 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using StaticViewLocator;
 using Tishko.ViewModels;
 
 namespace Tishko;
 
-public class ViewLocator : IDataTemplate
+[StaticViewLocator]
+public partial class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)
     {
         if (param is null)
             return null;
 
-        var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-        var type = Type.GetType(name);
+        var type = param.GetType();
 
-        if (type != null)
+        if (s_views.TryGetValue(type, out var factory))
         {
-            return (Control)Activator.CreateInstance(type)!;
+            var view = factory();
+            view.DataContext = param;
+            return view;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        return new TextBlock { Text = $"Not Found: {type.FullName}" };
     }
 
-    public bool Match(object? data)
-    {
-        return data is ViewModelBase;
-    }
+    public bool Match(object? data) => data is ViewModelBase;
 }

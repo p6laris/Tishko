@@ -4,8 +4,11 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using Tishko.ViewModels;
-using Tishko.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Tishko.Navigation;
+using Tishko.ViewModels.Pages;
+using Tishko.ViewModels.Windows;
+using Tishko.Views.Windows;
 
 namespace Tishko;
 
@@ -18,14 +21,26 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var services = new ServiceCollection();
+        
+        //Navigation
+        services.AddSingleton<IPageFactory, PageFactory>();
+        services.AddSingleton<INavigationService, NavigationService>();
+        
+        // ViewModels
+        services.AddTransient<HomeViewModel>();
+        services.AddTransient<SettingsViewModel>();
+        services.AddTransient<StatisticsViewModel>();
+        services.AddSingleton<MainWindowViewModel>();
+        var provider = services.BuildServiceProvider();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
+
+            var mainVm = provider.GetRequiredService<MainWindowViewModel>();
+            desktop.MainWindow = new MainWindowView
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = mainVm,
             };
         }
 

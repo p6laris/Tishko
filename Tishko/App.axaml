@@ -10,11 +10,18 @@
   <Application.Resources>
       <ResourceDictionary>
           <ResourceDictionary.MergedDictionaries>
-              <MergeResourceInclude Source="Styles/Colors.axaml"></MergeResourceInclude>
+              <MergeResourceInclude Source="Resources/Colors.axaml"></MergeResourceInclude>
+              <MergeResourceInclude Source="Resources/Fonts.axaml"></MergeResourceInclude>
           </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
   </Application.Resources>
     <Application.Styles>
+        <Style Selector="Window">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontFamily" Value="{StaticResource Exo}"></Setter>
+        </Style>
         <StyleInclude Source="Styles/IconButton.axaml"></StyleInclude>
+        <StyleInclude Source="Styles/TishkoLogo.axaml"></StyleInclude>
     </Application.Styles>
 </Application>

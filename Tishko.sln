@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tishko", "Tishko\Tishko.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tishko.Data", "Tishko.Data\Tishko.Data.csproj", "{EED04649-8F68-4D4D-B814-8C2C8163C9BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tishko.Generators", "Tishko.Generators\Tishko.Generators.csproj", "{F1487FFC-9B06-4EE8-955F-79956EA9D450}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{EED04649-8F68-4D4D-B814-8C2C8163C9BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EED04649-8F68-4D4D-B814-8C2C8163C9BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EED04649-8F68-4D4D-B814-8C2C8163C9BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1487FFC-9B06-4EE8-955F-79956EA9D450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1487FFC-9B06-4EE8-955F-79956EA9D450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1487FFC-9B06-4EE8-955F-79956EA9D450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1487FFC-9B06-4EE8-955F-79956EA9D450}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
