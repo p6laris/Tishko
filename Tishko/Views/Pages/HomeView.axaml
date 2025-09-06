@@ -3,8 +3,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ctrl="clr-namespace:Tishko.Controls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1080" d:DesignHeight="640"
              x:Class="Tishko.Views.Pages.HomeView">
-    <StackPanel>
+    <StackPanel HorizontalAlignment="Center">
+        <TextBlock Classes="TaskHeader">Create a performant parser</TextBlock>
+        <TimePicker></TimePicker>
+        <Border>
+            <ctrl:SessionOrb
+                x:Name="Orb"
+                Width="500" Height="500"
+                FillBrush="White"
+
+                BreathPeriod="9"
+                BreathMinScale="0.96"
+                BreathMaxScale="1.0"
+
+                WobbleAmplitude="0.8"
+                WobbleFrequency="1.0"
+
+                AxisAnisotropy="0.02"
+                AnisotropyFrequency="0.15"
+
+                RotationSpeed="0.3"
+
+                TwinEnabled="True"
+                TwinScaleMultiplier="0.985"
+                TwinOffsetPixels="0.8"
+                TwinPhaseOffset="3.14159"
+                TwinOrbitFrequency="0.05"
+
+                RingsEnabled="True"
+                RingCount="5"
+                RingSpacing="14"
+                RingThickness="2"
+                RingOpacity="0.35"
+                RingOpacityFalloff="0.82"
+                RingWobbleAmplitude="0.9"
+                RingWobbleFrequency="0.55"
+                AutoStart="True">
+                <ctrl:SessionPlayer/>
+            </ctrl:SessionOrb> 
+        </Border>
     </StackPanel>
 </UserControl>

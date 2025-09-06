@@ -1,39 +1,68 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Tishko.ViewModels.Windows"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Tishko"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Tishko.Views.Windows.MainWindowView"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Tishko">
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Tishko"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Tishko.Views.Windows.MainWindowView"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Tishko"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Tishko.ViewModels.Windows"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,*,*">
-        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Classes="TishkoLogo">Tishko</TextBlock>
-        <StackPanel Grid.Row="1" Grid.Column="2" Spacing="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Command="{Binding NavigateStatistics}" Classes="HeaderIcon"  Width="40" Height="40">
-            <Button.Content>
-                <Svg Path="/Assets/Icons/Chart.svg"></Svg>
-            </Button.Content>
-        </Button>
-            <Button Command="{Binding NavigateSettings}" Classes="HeaderIcon" Width="40" Height="40">
+    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,*">
+        <TextBlock
+            Classes="TishkoLogo"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            Tishko
+        </TextBlock>
+        <StackPanel
+            Grid.Column="2"
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Spacing="10"
+            VerticalAlignment="Center">
+            <Button
+                Classes="HeaderIcon"
+                Command="{Binding NavigateStatistics}"
+                Height="40"
+                Width="40">
                 <Button.Content>
-                    <Svg Path="/Assets/Icons/Settings.svg"></Svg>
+                    <Svg Path="/Assets/Icons/Chart.svg" />
+                </Button.Content>
+            </Button>
+            <Button
+                Classes="HeaderIcon"
+                Command="{Binding NavigateSettings}"
+                Height="40"
+                Width="40">
+                <Button.Content>
+                    <Svg Path="/Assets/Icons/Settings.svg" />
                 </Button.Content>
             </Button>
         </StackPanel>
-        <ContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,15,0,0" Content="{Binding CurrentViewModel}">
+        <ContentControl
+            Content="{Binding CurrentViewModel}"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Grid.Row="2"
+            Margin="0,100,0,0">
             <ContentControl.DataTemplates>
                 <local:ViewLocator />
             </ContentControl.DataTemplates>
-        </ContentControl>    
+        </ContentControl>
     </Grid>
 </Window>

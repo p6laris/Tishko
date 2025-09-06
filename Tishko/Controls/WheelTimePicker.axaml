@@ -1,0 +1,270 @@
+<!-- Root styles scope for your app/theme -->
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Tishko.Controls">
+
+  <!--
+    DESIGN PREVIEW
+    Shown only in the designer. Lets you see the control on a white background
+    with some padding — does not affect runtime.
+  -->
+  <Design.PreviewWith>
+    <Border Background="White" Padding="60">
+      <controls:WheelTimePicker Hour="04" Minute="05" SnapFeel="Bouncy"/>
+    </Border>
+  </Design.PreviewWith>
+
+  <!--
+    STYLE TARGET
+    This style applies to every <controls:WheelTimePicker/> and provides its visual tree
+    via a ControlTemplate. The class logic (C#) and the visuals (below) are cleanly separated.
+  -->
+  <Style Selector="controls|WheelTimePicker">
+
+    <!--
+      TEMPLATE
+      A ControlTemplate *replaces* the control’s visuals with whatever you define here.
+      Your C# code will later look up named parts (e.g., PART_Hours) from this tree.
+    -->
+    <Setter Property="Template">
+      <ControlTemplate TargetType="controls:WheelTimePicker">
+
+        <!--
+          ROOT LAYOUT
+          A compact white “card”. The Grid has 5 columns:
+          [0] Left label  [1] Hours wheel  [2] "H"  [3] Minutes wheel  [4] "M"
+          - ColumnDefinitions all "Auto" → each column is only as wide as needed
+          - Width/Height constrain the whole widget
+          - ClipToBounds keeps scrolled content and fades contained
+        -->
+        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
+              Width="220" Height="96"
+              Background="White"
+              ClipToBounds="True">
+
+          <!--
+            LEFT TITLE
+            Static uppercase label. It does not interact; it’s there for context.
+            Margin adds a small gap to the next column (hours).
+          -->
+          <TextBlock Grid.Column="0"
+                     Text="WORKING SET"
+                     Margin="0,0,6,0"
+                     VerticalAlignment="Center"
+                     Foreground="Black"
+                     FontSize="12"
+                     FontWeight="Bold"
+                     TextWrapping="NoWrap"
+                     TextAlignment="Center"/>
+
+          <!--
+            HOURS WHEEL CONTAINER
+            A Grid wrapper that:
+            - clips child content (so gradient overlays & scrolling don’t spill)
+            - hosts the ListBox "wheel" (interactive) and two fade overlays (visual only)
+          -->
+          <Grid Grid.Column="1" ClipToBounds="True">
+
+            <!--
+              HOURS LISTBOX  (PART_Hours)
+              This is a required template part. Your C# code calls e.NameScope.Find<ListBox>("PART_Hours")
+              to get this element and then:
+                - populates it with 00..23
+                - wires input (drag, wheel, keys)
+                - synchronizes selection and smooth snapping
+              Key settings here:
+                - Transparent background / no border → clean look
+                - Padding top/bottom = 32px → centers the selected row visually and reveals a "peek" above/below
+                - Hidden scrollbar → still scrolls programmatically and via pointer, just no visible bar
+                - Fixed Width = 48 → prevents layout shift when selected text gets bigger/bolder
+            -->
+            <ListBox x:Name="PART_Hours"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     Padding="0,32,0,32"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     SelectionMode="Single"
+                     Width="48">
+
+              <!--
+                HOURS ITEM TEMPLATE
+                Each item is a centered TextBlock that shows "00", "01", ..., "23".
+                We set Width=48 here too so every item’s content width exactly matches the lane width.
+              -->
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}"
+                             Width="48"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             TextAlignment="Center"
+                             FontSize="30"
+                             FontWeight="Light"
+                             Foreground="Gray"/>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+
+              <!--
+                SELECTED-ITEM VISUAL STYLE
+                This only applies to the TextBlock inside the *selected* ListBoxItem.
+                Making it bigger/bolder/darker emphasizes the middle row as the “chosen” value.
+                Layout won’t jump because the lane width is fixed to 48px.
+              -->
+              <ListBox.Styles>
+                <Style Selector="ListBoxItem:selected TextBlock">
+                  <Setter Property="Foreground" Value="Black"/>
+                  <Setter Property="FontSize" Value="40"/>
+                  <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+              </ListBox.Styles>
+
+              <!--
+                ROW HEIGHT
+                Each ListBoxItem is exactly 32px high.
+                IMPORTANT: Your C# uses ItemHeight = 32 for the snap math. This MUST match.
+              -->
+              <ListBox.ItemContainerTheme>
+                <ControlTheme TargetType="ListBoxItem">
+                  <Setter Property="Height" Value="32"/>
+                </ControlTheme>
+              </ListBox.ItemContainerTheme>
+            </ListBox>
+
+            <!--
+              TOP FADE OVERLAY
+              A non-interactive Border placed on top, with a vertical white→transparent gradient.
+              This creates a “fade out” for items that scroll under the top edge.
+              IsHitTestVisible=False ensures it won’t block mouse input to the ListBox.
+            -->
+            <Border IsHitTestVisible="False" VerticalAlignment="Top" Height="32">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                  <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
+                  <GradientStop Color="#00FFFFFF" Offset="1.0"/>
+                </LinearGradientBrush>
+              </Border.Background>
+            </Border>
+
+            <!--
+              BOTTOM FADE OVERLAY
+              Same idea as top, but inverted (bottom→up).
+              Together they give the “peek above/below” look without hard edges.
+            -->
+            <Border IsHitTestVisible="False" VerticalAlignment="Bottom" Height="32">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="50%,100%" EndPoint="50%,0%">
+                  <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
+                  <GradientStop Color="#00FFFFFF" Offset="1.0"/>
+                </LinearGradientBrush>
+              </Border.Background>
+            </Border>
+          </Grid>
+
+          <!--
+            "H" BADGE
+            A tiny label between the hours lane and the minutes lane.
+            Margin is very small to keep the group compact, as requested.
+          -->
+          <TextBlock Grid.Column="2"
+                     Text="H"
+                     Margin="0,0,2,0"
+                     VerticalAlignment="Center"
+                     Foreground="Black"
+                     FontSize="12"
+                     FontWeight="Bold"
+                     TextWrapping="NoWrap"
+                     TextAlignment="Center"/>
+
+          <!--
+            MINUTES WHEEL CONTAINER
+            Mirrors the hours container: ListBox + 2 fades. Same reasoning applies.
+          -->
+          <Grid Grid.Column="3" ClipToBounds="True">
+
+            <!--
+              MINUTES LISTBOX  (PART_Minutes)
+              Another required template part the C# code finds and wires just like hours.
+              Width is 48 to keep perfect alignment with hours and to avoid any width jitter.
+            -->
+            <ListBox x:Name="PART_Minutes"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     Padding="0,32,0,32"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     SelectionMode="Single"
+                     Width="48">
+
+              <!--
+                MINUTES ITEM TEMPLATE
+                Same centered TextBlock approach; base size is 28 (slightly smaller than hours base),
+                but the selected style below still bumps it to 40 and bold.
+              -->
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}"
+                             Width="48"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             TextAlignment="Center"
+                             FontSize="28"
+                             FontWeight="Light"
+                             Foreground="Gray"/>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+
+              <!-- Selected minute appearance (bold/bigger/black) -->
+              <ListBox.Styles>
+                <Style Selector="ListBoxItem:selected TextBlock">
+                  <Setter Property="Foreground" Value="Black"/>
+                  <Setter Property="FontSize" Value="40"/>
+                  <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+              </ListBox.Styles>
+
+              <!-- Row height = 32px (must match C# ItemHeight for correct snap math) -->
+              <ListBox.ItemContainerTheme>
+                <ControlTheme TargetType="ListBoxItem">
+                  <Setter Property="Height" Value="32"/>
+                </ControlTheme>
+              </ListBox.ItemContainerTheme>
+            </ListBox>
+
+            <!-- Minutes top fade -->
+            <Border IsHitTestVisible="False" VerticalAlignment="Top" Height="32">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                  <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
+                  <GradientStop Color="#00FFFFFF" Offset="1.0"/>
+                </LinearGradientBrush>
+              </Border.Background>
+            </Border>
+
+            <!-- Minutes bottom fade -->
+            <Border IsHitTestVisible="False" VerticalAlignment="Bottom" Height="32">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="50%,100%" EndPoint="50%,0%">
+                  <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
+                  <GradientStop Color="#00FFFFFF" Offset="1.0"/>
+                </LinearGradientBrush>
+              </Border.Background>
+            </Border>
+          </Grid>
+
+          <!--
+            "M" BADGE
+            The small minutes label at the far right.
+          -->
+          <TextBlock Grid.Column="4"
+                     Text="M"
+                     Margin="0"
+                     VerticalAlignment="Center"
+                     Foreground="Black"
+                     FontSize="12"
+                     FontWeight="Bold"
+                     TextWrapping="NoWrap"
+                     TextAlignment="Center"/>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

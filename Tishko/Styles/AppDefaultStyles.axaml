@@ -1,0 +1,92 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel>
+                <TextBlock Classes="TaskHeader">Create a performant parser</TextBlock>
+                <!--
+                <TextBlock Classes="TishkoLogo">Tishko</TextBlock>
+                -->
+                <!--
+                <Button Classes="HeaderIcon" Width="40">
+                    <Button.Content>
+                        <Svg Path="/Assets/Icons/Chart.svg" />
+                    </Button.Content>
+                </Button>
+            -->
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <!--  IconButton  -->
+    <Style Selector="Button.HeaderIcon">
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Padding" Value="8"></Setter>
+        <Setter Property="CornerRadius" Value="100"></Setter>
+        <Setter Property="BorderBrush" Value="White"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
+    </Style>
+    
+    <Style Selector="Button.HeaderIcon /template/ ContentPresenter">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0:0.5" Easing="SineEaseInOut"></BrushTransition>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0:0.2"></TransformOperationsTransition>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="Button.HeaderIcon:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource White}"></Setter>
+    </Style>
+    
+    <Style Selector="Button.HeaderIcon:pressed /template/ ContentPresenter">
+        <Setter Property="RenderTransform" Value="scale(0.9)"></Setter>
+        <Setter Property="Background" Value="{StaticResource Brush.Gray200}"></Setter>
+    </Style>
+    <Style Selector="Button.HeaderIcon > Svg">
+        <Setter Property="Css" 
+                Value=".color { fill: #fff" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0:0.4" Easing="SineEaseInOut"></TransformOperationsTransition>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="Button.HeaderIcon:pointerover > Svg">
+        <Setter Property="RenderTransform" Value="scale(1.3)"></Setter>
+        <Setter Property="Css" Value=".color { fill: #000;}"></Setter>
+    </Style>
+    
+    <!-- HeaderIcon -->
+    <Style Selector="TextBlock.TishkoLogo">
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource ExoBlack}"></Setter>
+        <Setter Property="FontSize" Value="120"></Setter>
+        <Setter Property="Margin" Value="50,20"></Setter>
+    </Style>
+    
+    <Style Selector="TextBlock.TaskHeader">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Foreground" Duration="0:0:0.3" Easing="SineEaseInOut"></BrushTransition>
+            </Transitions>
+        </Setter>
+        <Setter Property="Foreground">
+                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                    <GradientStop Color="{StaticResource Gray500}" Offset="0.0"/>
+                    <GradientStop Color="{StaticResource Gray400}" Offset="0.3"/>
+                    <GradientStop Color="{StaticResource Gray400}" Offset="0.6"/>
+                    <GradientStop Color="{StaticResource Gray500}" Offset="1.0"/>
+                </LinearGradientBrush>
+        </Setter>
+        <Setter Property="FontSize" Value="25"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource ExoMedium}"></Setter>
+        <Setter Property="FontStretch" Value="ExtraExpanded"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="Margin" Value="0,0,0,40"></Setter>
+    </Style>
+    <Style Selector="TextBlock.TaskHeader:pointerover">
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+</Styles>

@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Tishko.ViewModels.Controls"
+             x:DataType="vm:SessionPlayerViewModel"
+             Foreground="Black"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tishko.Controls.SessionPlayer">
+
+    <Design.DataContext>
+        <vm:SessionPlayerViewModel/>
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="Auto,*" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock 
+                FontSize="72" 
+                FontFamily="{StaticResource ExoBlack}"
+                Text="{Binding ElapsedFormatted}"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+               <Button Width="50">
+                       <Svg Path="/Assets/Icons/Play.svg"></Svg>
+               </Button> 
+                <Button Width="50">
+                    <Svg Path="/Assets/Icons/Pause.svg"></Svg>
+                </Button> 
+                <Button Width="50" IsVisible="False">
+                    <Svg Path="/Assets/Icons/Stop.svg"></Svg>
+                </Button> 
+                <Button Width="50">
+                    <Svg Path="/Assets/Icons/Next.svg"></Svg>
+                </Button> 
+            </StackPanel>
+        </Grid>
+</UserControl>

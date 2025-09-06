@@ -1,11 +1,12 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Tishko.Navigation;
+using Tishko.ViewModels.Controls;
 using Tishko.ViewModels.Pages;
 using Tishko.ViewModels.Windows;
 using Tishko.Views.Windows;
@@ -14,6 +15,7 @@ namespace Tishko;
 
 public partial class App : Application
 {
+    public static IServiceProvider Services { get; private set; } = null;
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -32,12 +34,15 @@ public partial class App : Application
         services.AddTransient<SettingsViewModel>();
         services.AddTransient<StatisticsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
-        var provider = services.BuildServiceProvider();
+        
+        //Controls
+        services.AddSingleton<SessionPlayerViewModel>();
+        Services = services.BuildServiceProvider();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             DisableAvaloniaDataAnnotationValidation();
 
-            var mainVm = provider.GetRequiredService<MainWindowViewModel>();
+            var mainVm = Services.GetRequiredService<MainWindowViewModel>();
             desktop.MainWindow = new MainWindowView
             {
                 DataContext = mainVm,
